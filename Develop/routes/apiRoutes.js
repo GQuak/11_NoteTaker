@@ -1,3 +1,6 @@
+// DEPENDENCIES
+const path = require('path');
+
 // LOAD DATA
 // 
 const noteData = require('../db/db');
