@@ -2,32 +2,44 @@
 const express = require('express');
 const path = require('path')
 const fs = require('fs');
-const app = express();
 
-// use the following code to serve images, CSS files and javascript files in a directory named public:
-app.use(express.static('public'));
+// Create the express server
+const app = express();
+// app.use(express.static('public'));
 
 // Creating a PORT Variable 
 var PORT = process.env.PORT || 3030;
 
+// Call the routing files
+require('./routes/htmlRoutes.js')(app);
+require('./routes/apiRoutes.js')(app);
+
+// Start listening on the specified port, aka start the server
+app.listen(PORT, () => console.log(`Listening at port http://localhost:${PORT}`));
+
+
+
 // Setting up Express
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
 
 // The following HTML routes should be created:
 // Creating an HTML route for the db.js file
-const dbPath = path.join(__dirname, 'db/db.json');
+// const dbPath = path.join(__dirname, 'db/db.json');
+
+// use the following code to serve images, CSS files and javascript files in a directory named public:
+// app.use(express.static('public'));
 
 
 // --------------------------------------------------------------
 // // GET requests
 // // `GET /notes` should return the `notes.html` file.
-app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, '/public/notes.html')));
+// app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, '/public/notes.html')));
 
-// `GET *` should return the `index.html` file.
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, '/public/index.html')));
+// // `GET *` should return the `index.html` file.
+// app.get('/', (req, res) => res.sendFile(path.join(__dirname, '/public/index.html')));
 
-// // `GET /api/notes` should read the `db.json` file and return all saved notes as JSON.
+// // // `GET /api/notes` should read the `db.json` file and return all saved notes as JSON.
 // app.get('/api/notes', (req, res) => {
 //     // read the db.json file
 //     let noteArray = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
@@ -66,6 +78,3 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname, '/public/index.html
 //     res.json(req.body);
 // });
 // --------------------------------------------------------
-
-
-app.listen(PORT, () => console.log(`Listening at port http://localhost:${PORT}`));
